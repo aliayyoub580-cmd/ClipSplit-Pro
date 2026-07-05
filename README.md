@@ -40,7 +40,7 @@ Recommended Vercel settings:
 Root Directory: .
 Install Command: npm install
 Build Command: npm run build
-Output Directory: client/dist
+Output Directory: dist
 ```
 
 The root `vercel.json` rewrites `/api/*` to the Express serverless entrypoint at `api/index.js`. If Vercel is configured with Root Directory `client`, API requests will be handled by the React static app instead of Express.

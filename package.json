@@ -5,7 +5,8 @@
   "description": "ClipSplit Pro monorepo with React/Vite frontend and optional Express API.",
   "scripts": {
     "dev": "npm --prefix client run dev",
-    "build": "npm --prefix client run build",
+    "build": "npm run build:client && node scripts/sync-client-dist.mjs",
+    "build:client": "npm --prefix client run build",
     "preview": "npm --prefix client run preview",
     "test": "npm --prefix client run test",
     "server": "npm --prefix server run dev"
