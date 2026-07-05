@@ -148,7 +148,12 @@ Log an anonymous usage event. No PII is collected or stored.
 }
 ```
 
-**Response:** `204 No Content`
+**Response 200**
+```json
+{
+  "success": true
+}
+```
 
 **Rate limit:** 60 requests per IP per minute.
 
@@ -253,8 +258,8 @@ vercel deploy --prod
 Set all environment variables in the Vercel dashboard under  
 **Project → Settings → Environment Variables**.
 
-The `vercel.json` routes all `/api/*` requests to the Express app  
-with a 10-second max function duration (well within Vercel Hobby limits).
+The root project `vercel.json` routes all `/api/*` requests to the Express app through `api/index.js`.
+Deploy the full project from the repository root (`.`). A client-only deployment cannot serve the Express API.
 
 ---
 

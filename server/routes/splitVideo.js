@@ -66,7 +66,7 @@ router.get("/split-video/events/:jobId", (req, res) => {
   });
 });
 
-router.post("/split-video", splitVideoLimiter, upload.single("video"), async (req, res, next) => {
+router.post("/split-video", splitVideoLimiter, vercelFfmpegGuard, upload.single("video"), async (req, res, next) => {
   const jobId = sanitizeJobId(req.body.jobId) || crypto.randomUUID();
   const clipDuration = Number(req.body.duration);
   let jobDir;
@@ -162,6 +162,10 @@ router.use((error, req, res, next) => {
     next(new UploadError("Video is too large. Please upload a file under 1GB.", 413));
     return;
   }
+  if (/unexpected end of form|multipart/i.test(error.message || "")) {
+    next(new UploadError("Please upload a valid video file.", 400));
+    return;
+  }
   if (error.code === "ENOSPC" || /no space left/i.test(error.message || "")) {
     next(new UploadError("Server disk space is full. Please try again later.", 507));
     return;
@@ -222,6 +226,18 @@ function runFfmpegSegment({ inputPath, clipsDir, clipDuration, jobId }) {
       reject(ffmpegError(stderr));
     });
   });
+}
+
+function vercelFfmpegGuard(req, res, next) {
+  if (!process.env.VERCEL || process.env.FFMPEG_PATH?.trim()) {
+    next();
+    return;
+  }
+
+  next(new UploadError(
+    "Video splitting reached the API, but this Vercel deployment does not have native FFmpeg configured. Deploy the backend on a runtime with FFmpeg and longer-running requests, or set FFMPEG_PATH to a bundled FFmpeg binary.",
+    501
+  ));
 }
 
 function resolveFfmpegCommand() {

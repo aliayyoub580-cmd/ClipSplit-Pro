@@ -109,8 +109,7 @@ router.post(
         }
       }
 
-      // Always return 204 No Content for analytics (fast & silent)
-      return res.status(204).send();
+      return res.status(200).json({ success: true });
     } catch (err) {
       next(err);
     }

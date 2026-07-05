@@ -31,3 +31,16 @@ server/   Express API for video splitting, downloads, contact, analytics, feedba
 ## Deployment
 
 The backend needs native `ffmpeg` available in `PATH` or `FFMPEG_PATH`. Use a server/runtime that supports long-running requests, multipart uploads, temporary disk storage, and native binaries.
+
+For Vercel, deploy from the repository root (`.`), not from `client/`.
+
+Recommended Vercel settings:
+
+```text
+Root Directory: .
+Install Command: npm install
+Build Command: npm run build
+Output Directory: client/dist
+```
+
+The root `vercel.json` rewrites `/api/*` to the Express serverless entrypoint at `api/index.js`. If Vercel is configured with Root Directory `client`, API requests will be handled by the React static app instead of Express.
