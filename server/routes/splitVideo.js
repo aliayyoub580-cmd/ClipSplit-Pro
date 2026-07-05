@@ -9,6 +9,7 @@ const EventEmitter = require("events");
 const archiver = require("archiver");
 const express = require("express");
 const multer = require("multer");
+const { splitVideoLimiter } = require("../middleware/rateLimiter");
 
 const router = express.Router();
 
@@ -65,7 +66,7 @@ router.get("/split-video/events/:jobId", (req, res) => {
   });
 });
 
-router.post("/split-video", upload.single("video"), async (req, res, next) => {
+router.post("/split-video", splitVideoLimiter, upload.single("video"), async (req, res, next) => {
   const jobId = sanitizeJobId(req.body.jobId) || crypto.randomUUID();
   const clipDuration = Number(req.body.duration);
   let jobDir;

@@ -1,43 +1,54 @@
 /**
  * Rate-limiting middleware using express-rate-limit.
  *
- * Three tiers:
- *  generalLimiter  – applied globally to every route
- *  contactLimiter  – stricter limit for contact form submissions
- *  analyticsLimiter – relaxed limit for high-frequency analytics pings
+ * The video splitter uses a long-lived Server-Sent Events connection for
+ * progress updates, so progress streams are excluded from the shared global
+ * bucket and upload attempts use their own dedicated limiter.
  */
 
 const rateLimit = require("express-rate-limit");
 
-// ─── General limiter (all routes) ────────────────────────────────────────────
+const isProduction = process.env.NODE_ENV === "production";
+const generalMax = positiveInteger(process.env.RATE_LIMIT_GENERAL_MAX, isProduction ? 200 : 2000);
+const splitVideoMax = positiveInteger(process.env.RATE_LIMIT_SPLIT_VIDEO_MAX, isProduction ? 30 : 300);
+
 const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200,
+  windowMs: 15 * 60 * 1000,
+  max: generalMax,
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => req.path.startsWith("/api/split-video/events/"),
   message: {
     success: false,
     error: "Too many requests. Please wait a moment and try again.",
   },
 });
 
-// ─── Contact form limiter ─────────────────────────────────────────────────────
-const contactLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5, // max 5 contact submissions per IP per hour
+const splitVideoLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: splitVideoMax,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
     success: false,
-    error:
-      "Too many messages sent from your IP. Please wait an hour before sending again.",
+    error: "Too many video split requests. Please wait a moment and try again.",
   },
 });
 
-// ─── Analytics event limiter ──────────────────────────────────────────────────
+const contactLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: "Too many messages sent from your IP. Please wait an hour before sending again.",
+  },
+});
+
 const analyticsLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 60, // up to 60 events per minute per IP
+  windowMs: 60 * 1000,
+  max: 60,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -46,9 +57,8 @@ const analyticsLimiter = rateLimit({
   },
 });
 
-// ─── Feedback limiter ─────────────────────────────────────────────────────────
 const feedbackLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hour
+  windowMs: 60 * 60 * 1000,
   max: 10,
   standardHeaders: true,
   legacyHeaders: false,
@@ -60,7 +70,13 @@ const feedbackLimiter = rateLimit({
 
 module.exports = {
   generalLimiter,
+  splitVideoLimiter,
   contactLimiter,
   analyticsLimiter,
   feedbackLimiter,
 };
+
+function positiveInteger(value, fallback) {
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : fallback;
+}
