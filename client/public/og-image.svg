@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="ClipSplit Pro video splitter">
+  <rect width="1200" height="630" fill="#050816"/>
+  <circle cx="130" cy="80" r="190" fill="#00E5FF" opacity="0.2"/>
+  <circle cx="1060" cy="560" r="240" fill="#7C3AED" opacity="0.25"/>
+  <text x="90" y="245" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="76" font-weight="900">ClipSplit Pro</text>
+  <text x="90" y="340" fill="#A1A1AA" font-family="Arial, sans-serif" font-size="36">Free online video splitter</text>
+  <text x="90" y="410" fill="#00E5FF" font-family="Arial, sans-serif" font-size="30">Split videos into 3-15 second clips</text>
+</svg>

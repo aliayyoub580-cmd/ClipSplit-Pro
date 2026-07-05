@@ -1,0 +1,17 @@
+{
+  "name": "clipsplit-pro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ClipSplit Pro monorepo with React/Vite frontend and optional Express API.",
+  "scripts": {
+    "dev": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "preview": "npm --prefix client run preview",
+    "test": "npm --prefix client run test",
+    "server": "npm --prefix server run dev"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}

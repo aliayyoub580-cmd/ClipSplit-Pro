@@ -1,0 +1,71 @@
+const topics = [
+  ["how-to-split-video-into-3-second-clips", "How to Split Video into 3 Second Clips", "split video into 3 second clips"],
+  ["free-online-video-splitter", "Free Online Video Splitter Without Watermark", "free online video splitter"],
+  ["best-video-splitter-for-youtube-shorts", "Best Video Splitter for YouTube Shorts", "split video for YouTube Shorts"],
+  ["split-video-for-instagram-reels", "Split Video for Instagram Reels", "split video for Instagram Reels"],
+  ["split-video-for-tiktok", "Split Video for TikTok", "split video for TikTok"],
+  ["split-mp4-into-multiple-clips", "Split MP4 into Multiple Clips", "split MP4 into multiple clips"],
+  ["split-video-every-5-seconds", "Split Video Every 5 Seconds", "split video into 5 second clips"],
+  ["split-video-every-10-seconds", "Split Video Every 10 Seconds", "split video into 10 second clips"],
+  ["split-video-every-15-seconds", "Split Video Every 15 Seconds", "split video into 15 second clips"],
+  ["browser-based-video-splitter", "Browser Based Video Splitter Guide", "browser based video splitter"],
+  ["no-upload-video-splitter", "No Upload Video Splitter for Private Editing", "no upload video splitter"],
+  ["privacy-friendly-video-splitter", "Privacy Friendly Video Splitter", "privacy friendly video splitter"],
+  ["online-video-cutter-vs-splitter", "Online Video Cutter vs Video Splitter", "online video cutter"],
+  ["make-short-clips-from-long-video", "Make Short Clips from a Long Video", "split long video into short clips"],
+  ["batch-video-clip-maker", "Batch Video Clip Maker Workflow", "video clip maker"],
+  ["prepare-shorts-from-webinar", "Prepare Shorts from a Webinar", "split video into clips"],
+  ["clip-long-podcast-video", "Clip a Long Podcast Video", "video splitter"],
+  ["split-large-video-online", "Split Large Video Online", "split large video online"],
+  ["mp4-splitter-for-creators", "MP4 Splitter for Creators", "MP4 splitter"],
+  ["video-splitter-for-social-media", "Video Splitter for Social Media", "video splitter for social media"],
+  ["split-video-without-installing-software", "Split Video Without Installing Software", "split video online"],
+  ["fast-video-splitting-tips", "Fast Video Splitting Tips", "fast video splitter"],
+  ["reduce-browser-memory-while-splitting-video", "Reduce Browser Memory While Splitting Video", "browser video processing"],
+  ["choose-best-clip-duration", "Choose the Best Clip Duration", "clip duration"],
+  ["split-video-for-ads", "Split Video for Ads", "video clip maker"],
+  ["split-video-for-course-lessons", "Split Video for Course Lessons", "split video into clips"],
+  ["split-video-for-highlights", "Split Video for Highlights", "video highlights"],
+  ["split-video-for-memes", "Split Video for Memes", "short video clip maker"],
+  ["convert-long-video-to-short-clips", "Convert Long Video to Short Clips", "long video to short clips"],
+  ["video-splitter-for-windows-browser", "Video Splitter in a Windows Browser", "online video splitter"],
+  ["video-splitter-for-mac-browser", "Video Splitter in a Mac Browser", "online video splitter"],
+  ["webm-video-splitter", "WEBM Video Splitter", "WEBM video splitter"],
+  ["mov-video-splitter", "MOV Video Splitter", "MOV video splitter"],
+  ["mkv-video-splitter-browser", "MKV Video Splitter in Browser", "MKV video splitter"],
+  ["split-video-for-story-content", "Split Video for Story Content", "short video clip maker"],
+  ["split-video-for-product-demos", "Split Video for Product Demos", "video clip maker"],
+  ["split-video-for-tutorials", "Split Video for Tutorials", "split video online"],
+  ["split-video-for-repurposing", "Split Video for Repurposing", "content repurposing video"],
+  ["split-video-into-equal-parts", "Split Video into Equal Parts", "split video into clips"],
+  ["video-splitter-without-watermark", "Video Splitter Without Watermark", "free video splitter without watermark"],
+  ["online-editor-for-video-clips", "Online Editor for Video Clips", "online editor"],
+  ["short-form-video-workflow", "Short Form Video Workflow", "short form video"],
+  ["split-video-for-marketers", "Split Video for Marketers", "video splitter"],
+  ["split-video-for-agencies", "Split Video for Agencies", "video clip maker"],
+  ["split-video-for-educators", "Split Video for Educators", "split video into clips"],
+  ["split-video-for-streamers", "Split Video for Streamers", "video splitter"],
+  ["split-video-for-gaming-clips", "Split Video for Gaming Clips", "video clips"],
+  ["split-video-for-event-recaps", "Split Video for Event Recaps", "video cutter online"],
+  ["split-video-for-newsletters", "Split Video for Newsletters", "video clip maker"],
+  ["best-online-video-splitter", "Best Online Video Splitter", "best online video splitter"]
+];
+
+export const blogPosts = topics.map(([slug, title, keyword], index) => ({
+  slug,
+  title,
+  keyword,
+  excerpt: `A practical guide to ${keyword} with a fast browser workflow, privacy notes, and download tips for creators.`,
+  date: "2026-07-05",
+  author: "ClipSplit Pro Team",
+  readingTime: `${4 + (index % 4)} min read`,
+  sections: [
+    `Use a browser based video splitter when you need a quick way to turn one source file into repeatable short clips without uploading private footage.`,
+    `For best results, start with MP4, choose a clip duration that matches the publishing channel, and keep clip count reasonable on low-memory devices.`,
+    `ClipSplit Pro is useful for creators, marketers, educators, and teams repurposing long recordings into short social video assets.`
+  ]
+}));
+
+export function getPost(slug) {
+  return blogPosts.find((post) => post.slug === slug);
+}
